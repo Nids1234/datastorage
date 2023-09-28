@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fetch user</title>
+</head>
+<body>
+    <div class="container">
+        <button id="fetch-button">Fetch Users</button>
+        <div id="user-list"></div>
+    </div>
+</body>
+</html>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+          let  fetchButton = document.getElementById("fetch-button");
+          let userList = document.getElementById("user-list");
+          fetchButton.addEventListener("click", () => {
+              // Fetch user data from the Reqres API
+              fetch("https://reqres.in/api/users")
+                  .then((response) => {
+                      if (!response.ok) {
+                          throw new Error("Network response was not ok");
+                      }
+                      return response.json();
+                  })
+                  .then((data) => {
+                      // Display user data
+                      displayUsers(data.data);
+                  })
+                  .catch((error) => {
+                      console.error("Fetch error:", error);
+                  });
+          });
+        
+          function displayUsers(users) {
+              // Clear previous user data
+              userList.innerHTML = "";
+      
+              // Create and append user cards
+              users.forEach((user) => {
+                  let  userCard = document.createElement("div");
+                  userCard.classList.add("user-card");
+                  userCard.innerHTML = `
+                      <img src="${user.avatar}" alt="${user.first_name} ${user.last_name}" class="user-avatar">
+                      <h3 class="user-name">${user.first_name} ${user.last_name}</h3>
+                      <p class="user-email">${user.email}</p>
+                  `;
+                  userList.appendChild(userCard);
+              });
+          }
+        });
+    
+</script>
