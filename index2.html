@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .container{
+        border:1px solid black;
+        width: 50%;
+        height:500px;
+        text-align: center;
+        padding:10px;
+ 
+        
+    }
+    #head{
+        text-align: center;
+    }
+    #submit-btn, #retrieve-btn {
+            display: block;
+            margin: 10px auto;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        #submit-btn:hover, #retrieve-btn:hover {
+            background-color: #0056b3;
+        }
+</style>
+<body>
+    <h1 id="head">  data storage </h1>
+    <div  class="container ">
+        <form id="form">
+            <lable id="n1">Name:</lable>
+            <input type="text" id="name" name="name"><br><br><br>
+            <lable id="a1">Age:</lable>
+            <input  type=number id="age" name="age"><br><br>
+            <button type="submit" id="b1">Submit</button>
+        </form>
+        <button id="retrieve-btn">Retrieve and Display Data</button>
+        <div id="display-area">
+            <!-- Data will be displayed here -->
+        </div>
+    </div>
+    </div>
+</body>
+</html>
+<script>
+    document.getElementById("form").addEventListener("submit",function(e){
+        e.preventDefault()
+        let name=document.getElementById("name").value;
+        let age=document.getElementById("age").value;
+        localStorage.setItem(`name`,name)
+        localStorage.setItem(`age`,age)
+        alert(`item set into localstorage`)
+
+    })
+    // Function to retrieve and display data
+    document.getElementById('retrieve-btn').addEventListener('click', function () {
+            let name = localStorage.getItem('name');
+            let  age = localStorage.getItem('age');
+
+            if (name && age) {
+                // Display data in a table
+                let displayArea = document.getElementById('display-area');
+                displayArea.innerHTML = `
+                <table>
+                        <tr>
+                            <th>Name</th>
+                            <th>Age</th>
+                        </tr>
+                        <tr>
+                            <td>${name}</td>
+                            <td>${age}</td>
+                        </tr>
+                    </table>
+                `;
+            } else {
+                alert('No data found in Local Storage.');
+            }
+        });
+
+
+</script>
